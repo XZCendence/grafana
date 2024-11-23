@@ -24,9 +24,9 @@ COPY conf/defaults.ini ./conf/defaults.ini
 
 RUN apk add --no-cache make build-base python3
 
-RUN yarn install --immutable
+RUN yarn install
 
-COPY tsconfig.json .eslintrc .editorconfig .browserslistrc .prettierrc.js ./
+COPY tsconfig.json  .editorconfig .browserslistrc .prettierrc.js ./
 COPY scripts scripts
 COPY emails emails
 
@@ -56,28 +56,33 @@ COPY go.* ./
 COPY .bingo .bingo
 
 # Include vendored dependencies
-COPY pkg/util/xorm/go.* pkg/util/xorm/
-COPY pkg/apiserver/go.* pkg/apiserver/
-COPY pkg/apimachinery/go.* pkg/apimachinery/
-COPY pkg/build/go.* pkg/build/
-COPY pkg/build/wire/go.* pkg/build/wire/
-COPY pkg/promlib/go.* pkg/promlib/
-COPY pkg/storage/unified/resource/go.* pkg/storage/unified/resource/
-COPY pkg/storage/unified/apistore/go.* pkg/storage/unified/apistore/
-COPY pkg/semconv/go.* pkg/semconv/
-COPY pkg/aggregator/go.* pkg/aggregator/
-COPY apps/playlist/go.* apps/playlist/
+COPY pkg/util/xorm pkg/util/xorm
+COPY pkg/apiserver pkg/apiserver
+COPY pkg/apimachinery pkg/apimachinery
+COPY pkg/build pkg/build
+COPY pkg/build/wire pkg/build/wire
+COPY pkg/promlib pkg/promlib
+COPY pkg/storage/unified/resource pkg/storage/unified/resource
+COPY pkg/storage/unified/apistore pkg/storage/unified/apistore
+COPY pkg/semconv pkg/semconv
+COPY pkg/aggregator pkg/aggregator
+COPY apps/playlist apps/playlist
 
+# Copy kindsv2 directory before go mod download
+COPY kindsv2 kindsv2
+COPY kinds kinds
+COPY cue.mod cue.mod
+
+# Now run go mod download
 RUN go mod download
+
 RUN if [[ "$BINGO" = "true" ]]; then \
       go install github.com/bwplotka/bingo@latest && \
       bingo get -v; \
     fi
 
+# Copy remaining files
 COPY embed.go Makefile build.go package.json ./
-COPY cue.mod cue.mod
-COPY kinds kinds
-COPY kindsv2 kindsv2
 COPY local local
 COPY packages/grafana-schema packages/grafana-schema
 COPY public/app/plugins public/app/plugins
