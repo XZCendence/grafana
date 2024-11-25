@@ -102,8 +102,35 @@ export class Sparkline extends PureComponent<SparklineProps, State> {
   }
 
   getYRange(field: Field): Range.MinMax {
-    let { min, max } = this.state.alignedDataFrame.fields[1].state?.range!;
-    const noValue = +this.state.alignedDataFrame.fields[1].config?.noValue!;
+    const { sparkline } = this.props;
+    const timeRange = sparkline.timeRange;
+
+    // Get the main time field
+    const timeField = this.state.alignedDataFrame.fields[0];
+    let { min, max } = field.state?.range!;
+
+    // If we have a time range, only consider values within it
+    if (timeRange && timeField.type === FieldType.time) {
+      const fromTime = timeRange.from.valueOf();
+      const toTime = timeRange.to.valueOf();
+
+      // Find min/max only within the specified time range
+      min = Infinity;
+      max = -Infinity;
+
+      for (let i = 0; i < timeField.values.length; i++) {
+        const time = timeField.values[i];
+        if (time >= fromTime && time <= toTime) {
+          const value = field.values[i];
+          if (value != null && !isNaN(value)) {
+            min = Math.min(min, value);
+            max = Math.max(max, value);
+          }
+        }
+      }
+    }
+
+    const noValue = +field.config.noValue!;
 
     if (!Number.isNaN(noValue)) {
       min = Math.min(min!, +noValue);
@@ -117,7 +144,6 @@ export class Sparkline extends PureComponent<SparklineProps, State> {
         min = 0;
         max! *= 2;
       }
-
       return [min, max!];
     }
 
