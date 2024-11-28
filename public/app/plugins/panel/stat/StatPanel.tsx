@@ -49,6 +49,7 @@ export class StatPanel extends PureComponent<PanelProps<Options>> {
         className={targetClassName}
         disableWideLayout={!options.wideLayout}
         percentChangeColorMode={options.percentChangeColorMode}
+        percentChangeDecimals={options.percentChangeDecimals}
       />
     );
   };

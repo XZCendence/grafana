@@ -70,6 +70,8 @@ export interface Props extends Themeable2 {
   hasLinks?: boolean;
   /** Percent change color mode */
   percentChangeColorMode?: PercentChangeColorMode;
+  /** Percent change decimals */
+  percentChangeDecimals?: number;
 
   /**
    * If part of a series of stat panes, this is the total number.
@@ -98,6 +100,7 @@ export class BigValue extends PureComponent<Props> {
     const textValues = layout.textValues;
     const percentChange = this.props.value.percentChange;
     const percentChangeColorMode = this.props.percentChangeColorMode;
+    const percentChangeDecimals = this.props.percentChangeDecimals;
     const showPercentChange = percentChange != null && !Number.isNaN(percentChange);
 
     // When there is an outer data link this tooltip will override the outer native tooltip
@@ -113,6 +116,7 @@ export class BigValue extends PureComponent<Props> {
               <PercentChange
                 percentChange={percentChange}
                 styles={layout.getPercentChangeStyles(percentChange, percentChangeColorMode, valueStyles)}
+                percentChangeDecimals={percentChangeDecimals}
               />
             )}
           </div>

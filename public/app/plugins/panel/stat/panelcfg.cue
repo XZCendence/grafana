@@ -34,6 +34,7 @@ composableKinds: PanelCfg: {
 					wideLayout:             bool | *true
 					showPercentChange:      bool | *false
 					percentChangeColorMode: common.PercentChangeColorMode & (*"standard" | _)
+					percentChangeDecimals:  int | *2
 				} @cuetsy(kind="interface")
 			}
 		}]

@@ -116,6 +116,18 @@ export const plugin = new PanelPlugin<Options>(StatPanel)
           ],
         },
         showIf: (config) => config.showPercentChange,
+      })
+      .addNumberInput({
+        path: 'percentChangeDecimals',
+        name: 'Percent change decimals',
+        defaultValue: undefined,
+        category: mainCategory,
+        settings: {
+          placeholder: 'auto',
+          min: 0,
+          max: 10,
+        },
+        showIf: (config) => config.showPercentChange,
       });
   })
   .setNoPadding()

@@ -159,7 +159,7 @@ export abstract class BigValueLayout {
 
     if (this.props.textMode === BigValueTextMode.None) {
       containerStyles.fontSize = calculateFontSize(
-        percentChangeString(percentChange),
+        percentChangeString(percentChange, this.props.percentChangeDecimals ?? 2),
         this.maxTextWidth * 0.8,
         this.maxTextHeight * 0.8,
         LINE_HEIGHT,
