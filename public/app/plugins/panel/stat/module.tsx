@@ -109,7 +109,9 @@ export const plugin = new PanelPlugin<Options>(StatPanel)
         settings: {
           options: [
             { value: PercentChangeColorMode.Standard, label: 'Standard' },
+            { value: PercentChangeColorMode.HighContrast, label: 'High Contrast' },
             { value: PercentChangeColorMode.Inverted, label: 'Inverted' },
+            { value: PercentChangeColorMode.InvertedHighContrast, label: 'Inverted High Contrast' },
             { value: PercentChangeColorMode.SameAsValue, label: 'Same as Value' },
           ],
         },

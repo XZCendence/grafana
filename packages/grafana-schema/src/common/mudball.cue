@@ -191,7 +191,7 @@ BigValueJustifyMode: "auto" | "center" @cuetsy(kind="enum")
 BigValueTextMode: "auto" | "value" | "value_and_name" | "name" | "none" @cuetsy(kind="enum",memberNames="Auto|Value|ValueAndName|Name|None")
 
 // TODO docs
-PercentChangeColorMode: "standard" | "inverted" | "same_as_value" @cuetsy(kind="enum",memberNames="Standard|Inverted|SameAsValue")
+PercentChangeColorMode: "standard" | "inverted" | "same_as_value" | "high_contrast" | "inverted_high_contrast" @cuetsy(kind="enum",memberNames="Standard|Inverted|SameAsValue|HighContrast|InvertedHighContrast")
 
 // TODO -- should not be table specific!
 // TODO docs

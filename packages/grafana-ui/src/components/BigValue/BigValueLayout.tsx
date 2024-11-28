@@ -614,8 +614,21 @@ export function getPercentChangeColor(
   if (percentChangeColorMode === PercentChangeColorMode.SameAsValue) {
     return valueStyles.color;
   } else {
-    return percentChange * (percentChangeColorMode === PercentChangeColorMode.Inverted ? -1 : 1) > 0
-      ? themeVisualizationColors.getColorByName('green')
-      : themeVisualizationColors.getColorByName('red');
+    const isInverted =
+      percentChangeColorMode === PercentChangeColorMode.Inverted ||
+      percentChangeColorMode === PercentChangeColorMode.InvertedHighContrast;
+    const isHighContrast =
+      percentChangeColorMode === PercentChangeColorMode.HighContrast ||
+      percentChangeColorMode === PercentChangeColorMode.InvertedHighContrast;
+
+    const isPositive = percentChange * (isInverted ? -1 : 1) > 0;
+
+    if (isHighContrast) {
+      return isPositive ? '#aeff00' : '#ff0040';
+    } else {
+      return isPositive
+        ? themeVisualizationColors.getColorByName('green')
+        : themeVisualizationColors.getColorByName('red');
+    }
   }
 }

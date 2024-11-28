@@ -556,7 +556,9 @@ export enum BigValueTextMode {
  * TODO docs
  */
 export enum PercentChangeColorMode {
+  HighContrast = 'high_contrast',
   Inverted = 'inverted',
+  InvertedHighContrast = 'inverted_high_contrast',
   SameAsValue = 'same_as_value',
   Standard = 'standard',
 }
